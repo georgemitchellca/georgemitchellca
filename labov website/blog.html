@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog</title>
+  <style>
+    body {
+      font-family: Georgia;
+      color: #ff2600;
+      margin: 20px;
+      background-color: #dcb7b0;
+    }
+    .post {
+      border-bottom: 1px solid #ff2600;
+      padding: 10px 0;
+    }
+    .post h2 {
+      margin: 0;
+    }
+    .post p {
+      margin: 5px 0;
+    }
+    h1 {
+      font-size: 75px;
+    }
+        a:link {
+  color: #ff2600;
+  text-decoration: none;
+}
+a:visited {
+  color: #ff2600;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ff2600;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #ff2600;
+  text-decoration: none;
+}
+  </style>
+</head>
+<body>
+<table width="1200"><tr><td>
+  <h1>Blog</h1>
+  <div id="feed"></div>
+
+  <script>
+    const rssFeedUrl = 'https://api.rss2json.com/v1/api.json?rss_url=https://labov.mataroa.blog/rss/';
+
+    async function fetchFeed() {
+      try {
+        const response = await fetch(rssFeedUrl);
+        const data = await response.json();
+        displayFeed(data.items);
+      } catch (error) {
+        console.error('Error fetching RSS feed:', error);
+      }
+    }
+
+    function displayFeed(items) {
+      const feedContainer = document.getElementById('feed');
+      feedContainer.innerHTML = '';
+
+      items.forEach(item => {
+        const post = document.createElement('div');
+        post.className = 'post';
+
+        const title = document.createElement('h2');
+        title.innerHTML = `<a href="${item.link}" target="_blank">${item.title}</a>`;
+
+        const description = document.createElement('p');
+        description.innerHTML = item.description;
+
+        const date = document.createElement('p');
+        date.textContent = new Date(item.pubDate).toLocaleDateString();
+
+        post.appendChild(title);
+        post.appendChild(description);
+        post.appendChild(date);
+        feedContainer.appendChild(post);
+      });
+    }
+
+    // Fetch the feed initially
+    fetchFeed();
+
+  </script></td></tr></table>
+  <br><a href="index2.html">back</a>
+</body>
+</html>
