@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email_body .= "Message:\n$message\n";
 
     // Set email headers
-    $headers = "From: no-reply@superimposer.net"; // Replace with a no-reply email or your domain email
+    $headers = "From: Labov@superimposer.net"; // Replace with a no-reply email or your domain email
 
     // Send the email
     if (mail($recipient_email, $subject, $email_body, $headers)) {
